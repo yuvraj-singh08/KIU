@@ -101,6 +101,10 @@ const getData = (segments) => {
     return flights;
 }
 
+app.get("/",(req,res) => {
+    res.json({ message: "Server is up and running!" });
+})
+
 
 app.post('/flights/query', async (req,res) => {
     try {
@@ -120,7 +124,7 @@ app.post('/flights/query', async (req,res) => {
     }
 })
 
-const PORT = 8000;
+const PORT = 3000;
 
 app.listen(PORT, () => {
     console.log(`> App running on port ${PORT} ...`);
