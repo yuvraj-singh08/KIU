@@ -5,7 +5,8 @@ const xml2js= require("xml2js");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({origin: 'https://amedeus.vercel.app'}
+));
 app.use(express.json());
 
 const baseURL = "https://ssl00.kiusys.com/ws3/index.php";
@@ -75,7 +76,7 @@ const getAvailableFlights = async (data) => {
 }
 
 const getData = (segments) => {
-    const flights = segments.map((segment, index) => {
+    const flights = segments?.map((segment, index) => {
         const flightSegment = segment.FlightSegment;
         const stopsDetails = flightSegment.map((data, index) => {
             const bookingClassAvailable = data.BookingClassAvail.map((bookingClass, index) => {
@@ -115,7 +116,7 @@ app.post('/flights/query', async (req,res) => {
         console.log(newDate);
         const dateString = newDate.toISOString().slice(0, 10);
         const response = await getAvailableFlights({ from, to, cabinPref, passengerQuantity, dateString })
-        const segments = response.KIU_AirAvailRS.OriginDestinationInformation[0].OriginDestinationOptions[0].OriginDestinationOption;
+        const segments = response.KIU_AirAvailRS?.OriginDestinationInformation[0]?.OriginDestinationOptions[0]?.OriginDestinationOption;
         const flights = getData(segments);
         // const price = await getFlightPrice(flights);
         return res.json(flights)
@@ -124,7 +125,7 @@ app.post('/flights/query', async (req,res) => {
     }
 })
 
-const PORT = 3000;
+const PORT = 4000;
 
 app.listen(PORT, () => {
     console.log(`> App running on port ${PORT} ...`);
