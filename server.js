@@ -5,7 +5,7 @@ const xml2js= require("xml2js");
 
 const app = express();
 
-app.use(cors({origin: 'https://amedeus.vercel.app'}
+app.use(cors({origin: 'https://travelcaribe.vercel.app'}
 ));
 app.use(express.json());
 
